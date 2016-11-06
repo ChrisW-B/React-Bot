@@ -5,32 +5,31 @@ import {
     AppRegistry,
     StyleSheet,
     ListView,
+    ScrollView,
     View
 } from 'react-native';
-import InvertibleScrollView from 'react-native-invertible-scroll-view';
-import Message from './message'
+import Message from './message';
 
 export default class MessageList extends Component {
     render() {
         const ds = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
-        });
-        const messageList = this.props.messages.slice();
+        })
         this.state = {
-            dataSource: ds.cloneWithRows(messageList.reverse()),
+            dataSource: ds.cloneWithRows(this.props.messages.slice()),
         };
+
+        /* beautify ignore:start */
         return (
-            <ListView 
+            <ListView
+                ref="listView"
                 enableEmptySections 
-                renderScrollComponent={props => <InvertibleScrollView {...props} inverted />
-        }
-        dataSource = {
-            this.state.dataSource
-        }
-        renderRow = {
-            (data) => <Message message={data}/>
-        }
-        />);
+                renderScrollComponent = {props => <ScrollView {...props}/>}
+                dataSource = {this.state.dataSource}
+                renderRow = {(data) => <Message message={data}/>}
+            />
+        );
+        /* beautify ignore:end */
     }
 }
 

@@ -3,59 +3,42 @@ import React, {
 } from 'react';
 import {
     AppRegistry,
-    TouchableHighlight,
-    Text,
-    View,
-    StyleSheet
+    StyleSheet,
+    View
 } from 'react-native';
+import ResButton from './resButton';
 
-export default class MessageList extends Component {
+export default class ResponseButtons extends Component {
     render() {
         return (
-            <View style={styles.viewStyle}>
-                <TouchableHighlight  underlayColor='green' style={[styles.yesButton, styles.button]}
-                    onPress={() => {
-                        this.props.ws.send('yes');
-                        this.props.messages.push({
-                            user: true,
-                            text: this.props.yes
-                        })
-                    }}> 
-                    <Text style={styles.text}>{this.props.yes}</Text>
-                </TouchableHighlight>
-                <TouchableHighlight underlayColor= 'red' style={[styles.noButton, styles.button]} 
-                    onPress={() => {
-                        this.props.ws.send('no');
-                        this.props.messages.push({
-                            user: true,
-                            text: this.props.no
-                        })}}> 
-                    <Text style={styles.text}>{this.props.no}</Text>
-                </TouchableHighlight>
-            </View>
+            this.props.resButtons ? <ButtonView {...this.props} /> : null
         );
     }
 }
 
+class ButtonView extends Component {
+    constructor(props) {
+        super(props);
+        this.update = this.update.bind(this);
+    }
+
+    render() {
+        return (
+            <View style={styles.viewStyle}>
+                <ResButton delay={0} onPress={(res, text) => this.update(res, text, this.props.ws)} res='yes' text={this.props.yes}/>
+                <ResButton delay={100} onPress={(res, text) => this.update(res, text, this.props.ws)} res='no'  text={this.props.no} />
+            </View>
+        );
+    }
+
+    update(res, text) {
+        this.props.addMessage(text, true);
+        setTimeout(() => this.props.addMessage('...', false), 200);
+        this.props.ws.send(res);
+    }
+}
+
 const styles = StyleSheet.create({
-    button: {
-        margin: 5,
-        marginBottom: 2,
-        minWidth: 20,
-        maxWidth: 200,
-        padding: 10,
-        borderRadius: 20,
-        borderBottomRightRadius: 0
-    },
-    text: {
-        color: 'white',
-    },
-    yesButton: {
-        backgroundColor: 'green',
-    },
-    noButton: {
-        backgroundColor: 'red',
-    },
     viewStyle: {
         flexDirection: 'row',
         alignSelf: 'center',

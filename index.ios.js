@@ -20,8 +20,8 @@ export default class botapp extends Component {
   render() {
     return (
       <View style={styles.container}>
-                <App />
-            </View>
+          <App />
+      </View>
     );
   }
 }

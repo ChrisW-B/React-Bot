@@ -2,18 +2,23 @@ import React, {
 	Component
 } from 'react';
 import {
-	View,
-	Text,
 	StyleSheet,
-	TouchableHighlight
+	TouchableHighlight,
+
 } from 'react-native';
+import {
+	Text,
+	View
+} from 'react-native-animatable';
+
 
 export default class Message extends Component {
 	render() {
 		const messageType = this.props.message.user ? styles.userMessage : styles.compMessage,
 			viewType = this.props.message.user ? styles.userView : styles.compView;
+		animationType = this.props.message.user ? 'bounceInRight' : 'bounceInLeft';
 		return (
-			<View style={[styles.viewStyle, viewType]}>
+			<View animation={animationType} duration={2000} style={[styles.viewStyle, viewType]}>
 				<TouchableHighlight style={[styles.message, messageType]}> 
                     <Text style={styles.text}>{this.props.message.text}</Text>
                 </TouchableHighlight>

@@ -3,8 +3,7 @@ import React, {
 } from 'react';
 import {
 	StyleSheet,
-	TouchableHighlight,
-
+	TouchableHighlight
 } from 'react-native';
 import {
 	Text,
@@ -18,7 +17,7 @@ export default class Message extends Component {
 			viewType = this.props.message.user ? styles.userView : styles.compView;
 		animationType = this.props.message.user ? 'bounceInRight' : 'bounceInLeft';
 		return (
-			<View animation={animationType} duration={2000} style={[styles.viewStyle, viewType]}>
+		<View key={this.props.id} delay={200} duration={600} animation={animationType} style={[styles.viewStyle, viewType]}>
 				<TouchableHighlight style={[styles.message, messageType]}> 
                     <Text style={styles.text}>{this.props.message.text}</Text>
                 </TouchableHighlight>

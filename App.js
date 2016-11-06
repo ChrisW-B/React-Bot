@@ -14,6 +14,7 @@ export default class RenderDate extends Component {
         const self = this;
         this.addMessage = this.addMessage.bind(this);
         this.removeLastMessage = this.removeLastMessage.bind(this);
+        this.respond = this.respond.bind(this);
         this.ws = new WebSocket('ws://localhost:3000/');
         this.state = {
             messages: [{
@@ -26,24 +27,28 @@ export default class RenderDate extends Component {
             self.setState({
                 resButtons: false
             });
-            setTimeout(() => {
-                const res = JSON.parse(e.data);
-                self.setState({
-                    pos: res.pos,
-                    neg: res.neg,
-                    resButtons: true
-                });
-                this.removeLastMessage();
-                res.message.forEach(
-                    ele => this.addMessage(ele, false)
-                );
-            }, 2000);
+            const res = JSON.parse(e.data);
+            setTimeout(() => this.respond(res.pos, res.neg, res.message), 2000);
         };
+    }
+    respond(pos, neg, message) {
+        this.setState({
+            pos: pos,
+            neg: neg,
+            resButtons: true
+        });
+        this.removeLastMessage();
+        let delayInc = 2;
+        message.forEach(
+            ele => {
+                setTimeout(() => this.addMessage(ele, false), delayInc * 100);
+                delayInc++
+            }
+        );
     }
     removeLastMessage() {
         let messageList = this.state.messages;
         messageList.pop();
-        console.log(messageList);
         this.setState({
             messages: messageList
         });

@@ -5,10 +5,10 @@ import {
     AppRegistry,
     StyleSheet,
     ListView,
-    ScrollView,
     View
 } from 'react-native';
 import Message from './message';
+import AutoScroll from 'react-native-auto-scroll'
 
 export default class MessageList extends Component {
     render() {
@@ -21,16 +21,16 @@ export default class MessageList extends Component {
 
         /* beautify ignore:start */
         return (
-            <ListView
-                ref="listView"
-                enableEmptySections 
-                renderScrollComponent = {props => <ScrollView {...props}/>}
-                dataSource = {this.state.dataSource}
-                renderRow = {(data) => <Message message={data}/>}
-            />
+            <AutoScroll
+                ref="messageList">
+                {this.props.messages.map((msg,id) => {
+                    return <Message key={id} message={msg} />
+                })}
+            </AutoScroll>
         );
         /* beautify ignore:end */
     }
+
 }
 
 const styles = StyleSheet.create({});

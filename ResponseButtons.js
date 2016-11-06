@@ -11,7 +11,7 @@ import ResButton from './resButton';
 export default class ResponseButtons extends Component {
     render() {
         return (
-            this.props.resButtons ? <ButtonView {...this.props} /> : null
+            this.props.resButtons ? <ButtonView {...this.props} /> : <View style={[styles.viewStyle, {height:50}]}/>
         );
     }
 }
@@ -32,8 +32,8 @@ class ButtonView extends Component {
     }
 
     update(res, text) {
-        this.props.addMessage(text, true);
-        setTimeout(() => this.props.addMessage('...', false), 200);
+        setTimeout(() => this.props.addMessage(text, true), 100);
+        setTimeout(() => this.props.addMessage('...', false), 300);
         this.props.ws.send(res);
     }
 }

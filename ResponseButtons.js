@@ -3,15 +3,17 @@ import React, {
 } from 'react';
 import {
     AppRegistry,
-    StyleSheet,
-    View
+    StyleSheet
 } from 'react-native';
 import ResButton from './resButton';
+import {
+    View
+} from 'react-native-animatable';
 
 export default class ResponseButtons extends Component {
     render() {
         return (
-            this.props.resButtons ? <ButtonView {...this.props} /> : <View style={[styles.viewStyle, {height:50}]}/>
+            <ButtonView {...this.props} />
         );
     }
 }
@@ -24,7 +26,7 @@ class ButtonView extends Component {
 
     render() {
         return (
-            <View style={styles.viewStyle}>
+            <View ref='buttons' style={styles.viewStyle}>
                 <ResButton delay={0} onPress={(res, text) => this.update(res, text, this.props.ws)} res='yes' text={this.props.yes}/>
                 <ResButton delay={100} onPress={(res, text) => this.update(res, text, this.props.ws)} res='no'  text={this.props.no} />
             </View>
@@ -34,6 +36,7 @@ class ButtonView extends Component {
     update(res, text) {
         setTimeout(() => this.props.addMessage(text, true), 100);
         setTimeout(() => this.props.addMessage('...', false), 300);
+        this.refs.buttons.bounceOutDown();
         this.props.ws.send(res);
     }
 }

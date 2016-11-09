@@ -20,22 +20,18 @@ export default class RenderDate extends Component {
             messages: [{
                 user: false,
                 text: '...'
-            }],
-            resButtons: false
+            }]
         }
         this.ws.onmessage = (e) => {
-            self.setState({
-                resButtons: false
-            });
             const res = JSON.parse(e.data);
             setTimeout(() => this.respond(res.pos, res.neg, res.message), 2000);
         };
     }
+
     respond(pos, neg, message) {
         this.setState({
             pos: pos,
-            neg: neg,
-            resButtons: true
+            neg: neg
         });
         this.removeLastMessage();
         let delayInc = 2;
@@ -46,6 +42,7 @@ export default class RenderDate extends Component {
             }
         );
     }
+
     removeLastMessage() {
         let messageList = this.state.messages;
         messageList.pop();
@@ -69,7 +66,6 @@ export default class RenderDate extends Component {
             <View style={{flex:1,flexDirection:'column', paddingTop: 22}}>
                 <MessageList messages={this.state.messages} />
                 <ResponseButtons 
-                    resButtons={this.state.resButtons} 
                     yes={this.state.pos} 
                     no={this.state.neg} 
                     ws={this.ws} 

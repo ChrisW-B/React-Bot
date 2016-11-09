@@ -11,6 +11,7 @@ import Message from './message';
 import AutoScroll from 'react-native-auto-scroll'
 
 export default class MessageList extends Component {
+
     render() {
         const ds = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
@@ -30,7 +31,6 @@ export default class MessageList extends Component {
         );
         /* beautify ignore:end */
     }
-
 }
 
 const styles = StyleSheet.create({});

@@ -14,7 +14,7 @@ import {
 export default class responseButton extends Component {
 	render() {
 		return (
-			<View animation='bounceInUp' delay={this.props.delay}>
+			<View animation='bounceInUp' delay={this.props.delay + 600}>
 				<TouchableHighlight
 					underlayColor='blue'
 					style={styles.button}

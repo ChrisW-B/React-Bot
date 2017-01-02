@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "react": "15.3.2",
-    "react-native": "0.36.1",
+    "react-native": "latest",
     "react-native-animatable": "^0.6.1",
     "react-native-auto-scroll": "^0.0.1"
   },
